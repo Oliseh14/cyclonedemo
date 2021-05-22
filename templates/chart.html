@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<nav class="navbar navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Cyclone</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Live<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/images">Images</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/chart.html">Sounds</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+      <li class="nav-item"> 
+         <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+      <li>
+        <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </li>
+    </ul>
+  </div>
+   </form>
+</nav>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyclone Chart</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  </head>
+  <body>
+    <div id={{ chartID|safe }} class="chart" style="height: 100px; width: 500px"></div>
+    <script>
+      var chart_id = {{ chartID|safe }}
+      var series = {{ series|safe }}
+      var title = {{ title|safe }}
+      var xAxis = {{ xAxis|safe }}
+      var yAxis = {{ yAxis|safe }}
+      var chart = {{ chart|safe }}
+    </script>
+    <canvas id="lineChart" width="900" height="400"></canvas>
+    <script>
+      var ctx = document.getElementById("lineChart").getContext("2d");
+      var lineChart = new Chart(ctx, {
+
+        type: "line"
+        data: {
+          labels: {{ labels | safe }},
+          datasets: [
+          {
+              label: "Data points",
+              data: {{ values | safe }},
+              fill: false,
+              borderColor: "rgb(75, 192, 180)",
+              lineTension: 0.5  
+
+          }
+
+          ]
+
+        },
+        options: {
+          responsive: true 
+        }
+      });
+
+    </script>
+  
+  </body>
+  </html>
+
+
+{% endblock %}

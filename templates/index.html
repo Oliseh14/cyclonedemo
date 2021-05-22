@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/home">CYCLONE</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="/">Videos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/images">Images</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/chart">Charts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
+    <link rel="stylesheet" href="static/index.css">
+    <title>Cyclone Editor</title>   
+</head>
+
+<body style="background-color:#1d1d1d;">
+    <div style="text-align: center;">
+        <div style="margin: 5px;">
+                <div>
+         
+        <input style="display: none;" id="selectedVideoOrImageId" type="checkbox" name="checkMode" value="video" />
+
+        <div style="margin-top: 15px; ">
+            <div style="display:inline-block; margin: 5px; font-size: 14px; color: #ffa600;">IP CAMERA:</div>
+
+            <div style="margin-left: 5px; display: inline-block;">
+                <form method="post" enctype=multipart/form-data action="">
+                    <input type="text" name="textbox" id="sourceInputId" size="20">
+                    <label class="getFileLabel" for="setUrlLinkId">CONNECT</label>
+                    <input style="display: none;" name="ttt" type="submit" id="setUrlLinkId" value="changeUrl"
+                        onclick="sendStopCommand(), resetSettings(), form.submit()" />
+                </form>
+            </div>
+            <div style="display: inline-block; color:#ffa600; margin-left: 10px;">OR:</div>
+            <div style="margin-left: 5px; display: inline-block;">
+                <form action="" method=post enctype=multipart/form-data>
+                    <label class="getFileLabel" for="sendFileId">UPLOAD NEW FILE</label>
+                    <input style="display:none" id="sendFileId" name="file" type="file"
+                        onchange="sendStopCommand(), form.submit()" />
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <img style="max-width: 60%; border-radius: 20px; box-shadow: 6px 4px 8px #000000; margin-top: 10px; margin-bottom: 5px;"
+                src="{{ url_for('video_feed') }}">
+        </div>
+
+        <div style="margin-bottom: 10px; margin-top: 5px;">
+            <div style="display: inline-block;">
+                <button style="border-radius: 7px; height: 30px;" onclick="sendStartCommand()">START</button>
+                <button style="border-radius: 7px; height: 30px;" onclick="sendStopCommand()">STOP</button>
+                <button style="border-radius: 7px; height: 30px;" onclick="sendScreenshotCommand()">TAKE SCREENSHOT</button>
+                <button style="border-radius: 7px; height: 30px;" onclick="resetSettings()">RESET SETTINGS</button>
+                <button style="border-radius: 7px; height: 30px;"
+                    onclick="window.open('{{pathToRenderedFile}}')">DOWNLOAD RENDER</button>
+                <button id="downloadObjectsId" style="border-radius: 7px; height: 30px;"
+                    onclick="window.open('{{pathToZipFile}}')">DOWNLOAD OBJECTS</button>
+                <!-- <a style="border-radius: 5px; background-color:#383838;  padding: 10px; box-shadow: 6px 4px 8px #000000;"
+                    href="http://192.168.0.194:5000">HOME PAGE</a> -->
+            </div>
+        </div>
+
+            <div id="confidenceIdBlock" class="renderSettings">
+                <div style="display: inline-block; font-size: 16px; color: white;">CONFIDENCE THRESHOLD:</div>
+                <div style=" display: inline-block;font-size: 16px; color: white;" id="confidenceValue"></div>
+                <div>
+                    <input style="-webkit-appearance: none; appearance: none; border-radius: 10px; height: 15px; background-color: rgb(253, 228, 0); width: 400px; box-shadow: 6px 4px 8px #000000;"
+                        type="range" min="0" max="100" step="1" value="20" class="slider" id="confidenceId">
+                    </div>
+            
+      
+                <input style="-webkit-appearance: none; appearance: none; border-radius: 10px; height: 15px; background-color: rgb(253, 228, 0); width: 400px; box-shadow: 6px 4px 8px #000000;"
+                        type="range" min="20" max="400" step="1" value="100" class="slider" id="resizeId">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/home">CYCLONE</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <li class="nav-item">
+        <a class="nav-link" href="/">Videos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/images">Images</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/chart">Charts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+
+
+
+
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Cyclone Chart</title>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+	</head>
+	<body>
+		<canvas id="lineChart" width="900" height="400"></canvas>
+		<script>
+			var ctx = document.getElementById("lineChart").getContext("2d");
+			var lineChart = new Chart(ctx, {
+
+				type: "line"
+				data: {
+					labels: {{ labels | safe }},
+					datasets: [
+					{
+					    label: "Data points",
+					    data: {{ values | safe }},
+					    fill: false,
+					    borderColor: "rgb(75, 192, 180)",
+					    lineTension: 0.5	
+
+					}
+
+					]
+
+				},
+				options: {
+					responsive: true 
+				}
+			});
+
+		</script>
+	
+	</body>
+	</html>
+	{% endblock %}
